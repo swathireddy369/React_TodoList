@@ -85,16 +85,22 @@ ul {
     padding: 0;
     margin: 0;
     overflow: scroll;
-    overflow-x: hidden
+    overflow-x: hidden;
+    list-style-type: none;
 }
 
 li {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     padding: 0.7rem;
     cursor: pointer;
     color: #72777e
 }
+.list-container {
+    display: flex;
+    /* align-items: center; */
+    /* gap: 1rem; */
+  }
 
 .scroll {
     /* border:0.06rem solid var(--grey-border);
