@@ -9,6 +9,7 @@
     --blue: #2d70fd;
     --green: #00d87a;
     --white: #ffffff;
+  
 
 }
 
@@ -85,16 +86,61 @@ ul {
     padding: 0;
     margin: 0;
     overflow: scroll;
-    overflow-x: hidden
+    overflow-x: hidden;
+    list-style-type: none;
+}
+.toggleClass{
+    text-decoration: line-through;
 }
 
 li {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     padding: 0.7rem;
     cursor: pointer;
-    color: #72777e
+    color: #72777e;
+  
 }
+input[type="checkbox"] {
+    appearance: none;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]::before {
+    content: "\2713";
+     display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 1px solid var(--grey);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: transparent;
+  }
+  
+  input[type="checkbox"]:checked:before {
+    color: var(--white);
+    background-color: var(--green);
+    border: 1px solid var(--green);
+    border-radius:50%;
+  }
+
+
+.editTodo{
+   
+        /* display: flex; */
+        /* flex-direction: column; */
+        padding: 0.7rem;
+        cursor: pointer;
+        color: #72777e;
+      
+    
+}
+.list-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 
 .scroll {
     /* border:0.06rem solid var(--grey-border);
