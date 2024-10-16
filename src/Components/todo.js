@@ -1,43 +1,69 @@
-import { useState } from "react";
-import "./CSS/style.css"
+import { useEffect, useState } from "react";
+import "./CSS/style.css";
 function Todo() {
-    const [todoList, setTodoList] = useState(localStorage.getItem("todo") && Array.isArray( JSON.parse(localStorage.getItem("todo"))) &&   JSON.parse(localStorage.getItem("todo")).length !== 0 
-                                        ? JSON.parse(localStorage.getItem("todo")):[] );
+    const [todoList, setTodoList] = useState(localStorage.getItem("Todos") &&
+        Array.isArray(JSON.parse(localStorage.getItem("Todos"))) && JSON.parse(localStorage.getItem("Todos")).length !== 0
+        ? JSON.parse(localStorage.getItem("Todos")) :
+        [
+        ]);
     let [newTodo, setTodo] = useState("");
-    console.log("hiiiii",todoList);
+    let [editText, setEditText] = useState("")
+    let [editIndex, setEditIndex] = useState(null)
+    useEffect(() => {
+        localStorage.setItem("Todos", JSON.stringify(todoList))
+    }, [todoList])
 
     const addTask = (e) => {
-        console.log("e", e.key, e.target.value);
-    
         if (e.key === "Enter") {
-          btnAdd();
+            btnAdd();
         }
-       
+
     };
     const btnAdd = () => {
-        let updatedTodoList = [...todoList, newTodo];
-      
-        console.log("localStoage",localStorage.getItem("todo"));
-        setStorage(JSON.stringify(updatedTodoList))
+        let updatedTodoList = [...todoList, { text: newTodo, completed: false }];
         setTodoList(updatedTodoList);
         setTodo("");
     }
 
     const deleteAll = () => {
         setTodoList([]);
-        setStorage([])
+    }
+    const toggleChange = (index) => {
+        let newList = [...todoList]
+        newList[index]["completed"] = !newList[index]["completed"]
+        setTodoList(newList)
+    }
 
+    const handleEditChange = (e) => {
+        setEditText(e.target.value)
     }
-    const setStorage = (array)=>{
-        localStorage.setItem("todo",array)
+    const handleKeyDownEdit = (e, index) => {
+        if (e.key === "Enter") {
+            let editableTodoList = [...todoList]
+            todoList[index].text = editText
+            setTodoList(editableTodoList)
+            setEditIndex(null)
+
+        }
     }
+    const handleBlur = (e, index) => {
+        let testList = [...todoList];
+        testList[index] = {
+            ...testList[index],
+            text: editText
+        };
+        setTodoList(testList);
+        setEditIndex(null)
+    }
+
+
     return <>
         <div className="main">
             <div className="todo_container">
                 <h2 className="header">To Do List</h2>
                 <div className="input_container">
-                    <input placeholder="Add a Task Here" className="text_Input"   value={newTodo}
-                                    onChange={(e) => setTodo(e.target.value)} onKeyUp={(e) => addTask(e)}></input>
+                    <input placeholder="Add a Task Here" className="text_Input" value={newTodo}
+                        onChange={(e) => setTodo(e.target.value)} onKeyUp={(e) => addTask(e)}></input>
                     <button className="add" onClick={(e) => btnAdd()}>ADD</button>
                 </div>
                 <ul className="scroll">
@@ -46,14 +72,35 @@ function Todo() {
                             <div className="list-container" key={index}>
                                 <input
                                     type="checkbox"
-                                    name={item}
-                                    // key={index}
-                                  
+                                    name={item.text}
+                                    onChange={(e) => toggleChange(index)}
+                                    checked={item.completed}
                                     id={`todo__checkbox - ${index}`}
                                 />
-                                <li id={`todo_li - ${index}`} key={index}>
-                                    {item}
-                                </li>
+                                {editIndex == index ?
+                                    <input id={`todo_li - ${index}`}
+                                        onChange={handleEditChange}
+                                        onKeyDown={(e) => handleKeyDownEdit(e, index)}
+                                        onBlur={() => handleBlur(index)}
+                                        value={editText}
+                                        key={index}
+                                        className={item.completed ? "toggleClass" + " " + "editTodo" : "none"} /> :
+                                    <li id={`todo_li - ${index}`}
+
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            setEditIndex(index)
+                                            setEditText(todoList[index].text)
+                                        }
+                                        }
+                                        key={index} className={item.completed ? "toggleClass" : "none"}>
+                                        {item.text}
+                                    </li>
+                                }
+
+
+
+
                             </div>
                         );
                     })}
