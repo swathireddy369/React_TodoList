@@ -77,9 +77,9 @@
 }
 
 .footer_text {
-
-    position: relative;
-    top: 3rem;
+    /* position: relati; */
+    /* top: 5rem; */
+    color:green;
 }
 
 ul {
