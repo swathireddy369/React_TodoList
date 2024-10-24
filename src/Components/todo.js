@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import { useEffect, useState } from "react";
 import "./CSS/style.css";
 function Todo() {
@@ -79,7 +80,7 @@ const handlejy=(e)=>{
                                     checked={item.completed}
                                     id={`todo__checkbox - ${index}`}
                                 />
-                                {editIndex == index ?
+                                {editIndex === index ?
                                     <input id={`todo_li - ${index}`}
                                         onChange={handleEditChange}
                                         onKeyDown={(e) => handleKeyDownEdit(e, index)}
