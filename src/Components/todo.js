@@ -24,7 +24,6 @@ function Todo() {
         setTodoList(updatedTodoList);
         setTodo("");
     }
-
     const deleteAll = () => {
         setTodoList([]);
     }
@@ -56,9 +55,12 @@ function Todo() {
         setEditIndex(null)
     }
 
-
+const handlejy=(e)=>{
+    console.log(e,"e");
+    
+}
     return <>
-        <div className="main">
+        <div className="main" onClick={handlejy}>
             <div className="todo_container">
                 <h2 className="header">To Do List</h2>
                 <div className="input_container">
